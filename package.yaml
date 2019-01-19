@@ -1,0 +1,45 @@
+name:                noobs-notification
+version:             0.1.0
+github: dogonthehorizon/noobs-notification
+license:             BSD3
+author:              Fernando Freire
+copyright:           2019 Fernando Freire
+extra-source-files:
+- README.md
+
+default-extensions:
+  - OverloadedStrings
+  - BangPatterns
+  - DefaultSignatures
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DeriveLift
+  - DeriveTraversable
+  - EmptyCase
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - LambdaCase
+  - MultiParamTypeClasses
+  - MultiWayIf
+  - OverloadedStrings
+  - PatternSynonyms
+  - ScopedTypeVariables
+
+
+dependencies:
+  - base >= 4.7 && < 5
+  - text
+
+library:
+  source-dirs: src
+  dependencies:
+    - hal
+    - scalpel
+
+executables:
+  noobs-notification:
+    source-dirs:      app
+    main:             Main.hs
+    dependencies:
+      - noobs-notification
