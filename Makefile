@@ -23,5 +23,7 @@ _STYLISH=stack --no-docker exec -- stylish-haskell -i {} \;
 stylish-haskell:
 	@find {src,app}/ -name "*.hs" -exec $(_STYLISH)
 
+lint-all: stylish-haskell hlint
+
 test:
 	stack test --test-arguments "--color always"

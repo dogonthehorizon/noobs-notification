@@ -5,8 +5,8 @@ module NoobsNotification.Scraper (
 import           Data.Text               (Text)
 import qualified Data.Text               as T
 import           NoobsNotification.Types
-import           Text.HTML.Scalpel       (Scraper, attr, chroots,
-                                          hasClass, scrapeURL, text, (//), (@:))
+import           Text.HTML.Scalpel       (Scraper, attr, chroots, hasClass,
+                                          scrapeURL, text, (//), (@:))
 
 scrape :: Text -> IO (Maybe [Image])
 scrape url = scrapeURL (T.unpack url) images
@@ -22,9 +22,9 @@ noobsImage = do
   return $ Image name version url
 
 imageVersion :: Scraper Text Version
-imageVersion = do
+imageVersion =
   text $ "div" @: [hasClass "image-details"] // "strong"
 
 torrentDownload :: Scraper Text TorrentDownload
-torrentDownload = do
+torrentDownload =
   attr "href" $ "a" @: [hasClass "dl-torrent"]

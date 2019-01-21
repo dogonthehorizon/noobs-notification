@@ -19,7 +19,7 @@ main = do
   case res of
     Nothing -> return ()
     Just images -> do
-      r <- flip traverse images $ \i -> do
+      r <- for images $ \i -> do
         newerImage <- isNewerImage i
         if newerImage
            then print i
