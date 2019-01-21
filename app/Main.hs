@@ -1,5 +1,6 @@
 module Main where
 
+import Data.Traversable (for)
 import qualified Data.Text.IO               as T
 import           NoobsNotification.Database
 import           NoobsNotification.Scraper  (scrape)

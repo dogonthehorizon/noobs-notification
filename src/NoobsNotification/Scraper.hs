@@ -1,3 +1,5 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+
 module NoobsNotification.Scraper (
   scrape
 ) where
@@ -15,16 +17,16 @@ images :: Scraper Text [Image]
 images = chroots ("div" @: [hasClass "image-info"]) noobsImage
 
 noobsImage :: Scraper Text Image
-noobsImage = do
-  name <- text "h3"
-  version <- imageVersion
-  url <- torrentDownload
-  return $ Image name version url
+noobsImage =
+  Image
+    <$> text "h3"
+    <*> imageVersion
+    <*> NoobsNotification.Scraper.torrentDownload
 
-imageVersion :: Scraper Text Version
+imageVersion :: Scraper Text Text
 imageVersion =
   text $ "div" @: [hasClass "image-details"] // "strong"
 
-torrentDownload :: Scraper Text TorrentDownload
+torrentDownload :: Scraper Text Text
 torrentDownload =
   attr "href" $ "a" @: [hasClass "dl-torrent"]

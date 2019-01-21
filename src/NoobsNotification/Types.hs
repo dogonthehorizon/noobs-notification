@@ -1,11 +1,14 @@
 module NoobsNotification.Types where
 
 import           Data.Text (Text)
+import Data.Aeson (FromJSON, ToJSON)
+import GHC.Generics (Generic)
 
-type TorrentDownload = Text
-type Version         = Text
-type Name            = Text
+data Image = Image {
+  name            :: Text,
+  version         :: Text,
+  torrentDownload :: Text
+} deriving (Show, Generic)
 
-data Image = Image Name Version TorrentDownload deriving (Show)
-
-type File = Text
+instance FromJSON Image where
+instance ToJSON Image where
