@@ -19,10 +19,10 @@ main = do
   case res of
     Nothing -> return ()
     Just images -> do
-      r <- (flip traverse) images $ \i -> do
+      r <- flip traverse images $ \i -> do
         newerImage <- isNewerImage i
         if newerImage
-           then putStrLn $ show i
+           then print i
            else do
              writeResult <- writeImageFile i
              case writeResult of

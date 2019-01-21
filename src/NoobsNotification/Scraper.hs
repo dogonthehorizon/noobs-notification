@@ -16,17 +16,15 @@ images = chroots ("div" @: [hasClass "image-info"]) noobsImage
 
 noobsImage :: Scraper Text Image
 noobsImage = do
-  name <- text $ "h3"
+  name <- text "h3"
   version <- imageVersion
   url <- torrentDownload
   return $ Image name version url
 
 imageVersion :: Scraper Text Version
 imageVersion = do
-  version <- text $ "div" @: [hasClass "image-details"] // "strong"
-  return version
+  text $ "div" @: [hasClass "image-details"] // "strong"
 
 torrentDownload :: Scraper Text TorrentDownload
 torrentDownload = do
-  url <- attr "href" $ "a" @: [hasClass "dl-torrent"]
-  return url
+  attr "href" $ "a" @: [hasClass "dl-torrent"]
