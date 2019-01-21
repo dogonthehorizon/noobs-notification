@@ -3,7 +3,6 @@ module NoobsNotification.Database (
   writeImageFile
 ) where
 
-import           Control.Monad.IO.Class  (MonadIO)
 import           Data.Text               (Text)
 import           NoobsNotification.Types
 

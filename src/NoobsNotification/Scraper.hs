@@ -5,7 +5,7 @@ module NoobsNotification.Scraper (
 import           Data.Text               (Text)
 import qualified Data.Text               as T
 import           NoobsNotification.Types
-import           Text.HTML.Scalpel       (Scraper, attr, chroot, chroots,
+import           Text.HTML.Scalpel       (Scraper, attr, chroots,
                                           hasClass, scrapeURL, text, (//), (@:))
 
 scrape :: Text -> IO (Maybe [Image])
