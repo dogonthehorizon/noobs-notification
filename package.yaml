@@ -17,7 +17,6 @@ ghc-options:
   - -fwarn-incomplete-patterns
 
 default-extensions:
-  - OverloadedStrings
   - BangPatterns
   - DefaultSignatures
   - DeriveFoldable
@@ -31,6 +30,7 @@ default-extensions:
   - LambdaCase
   - MultiParamTypeClasses
   - MultiWayIf
+  - NamedFieldPuns
   - OverloadedStrings
   - PatternSynonyms
   - ScopedTypeVariables
@@ -46,6 +46,7 @@ library:
     - hal
     - scalpel
     - amazonka-s3
+    - aeson
 
 executables:
   noobs-notification:
