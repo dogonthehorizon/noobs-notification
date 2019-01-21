@@ -2,16 +2,11 @@ module NoobsNotification.Scraper (
   scrape
 ) where
 
+import NoobsNotification.Types
 import           Data.Text         (Text)
 import qualified Data.Text         as T
 import           Text.HTML.Scalpel (Scraper, attr, chroot, chroots, hasClass,
                                     scrapeURL, text, (//), (@:))
-
-type TorrentDownload = Text
-type Version         = Text
-type Name            = Text
-
-data Image = Image Name Version TorrentDownload deriving (Show)
 
 scrape :: Text -> IO (Maybe [Image])
 scrape url = scrapeURL (T.unpack url) images
