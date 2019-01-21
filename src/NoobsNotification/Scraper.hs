@@ -2,11 +2,11 @@ module NoobsNotification.Scraper (
   scrape
 ) where
 
-import NoobsNotification.Types
-import           Data.Text         (Text)
-import qualified Data.Text         as T
-import           Text.HTML.Scalpel (Scraper, attr, chroot, chroots, hasClass,
-                                    scrapeURL, text, (//), (@:))
+import           Data.Text               (Text)
+import qualified Data.Text               as T
+import           NoobsNotification.Types
+import           Text.HTML.Scalpel       (Scraper, attr, chroot, chroots,
+                                          hasClass, scrapeURL, text, (//), (@:))
 
 scrape :: Text -> IO (Maybe [Image])
 scrape url = scrapeURL (T.unpack url) images

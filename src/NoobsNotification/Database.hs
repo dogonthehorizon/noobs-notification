@@ -3,9 +3,9 @@ module NoobsNotification.Database (
   writeImageFile
 ) where
 
-import Control.Monad.IO.Class (MonadIO)
-import Data.Text (Text)
-import NoobsNotification.Types
+import           Control.Monad.IO.Class  (MonadIO)
+import           Data.Text               (Text)
+import           NoobsNotification.Types
 
 getImageFile :: Monad m => Name -> m (Either Text Image)
 getImageFile _ = return $ Right (Image "test" "3.0.1" "bar")

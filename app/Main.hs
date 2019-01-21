@@ -1,9 +1,9 @@
 module Main where
 
-import qualified Data.Text.IO as T
-import NoobsNotification.Types
-import NoobsNotification.Database
-import NoobsNotification.Scraper (scrape)
+import qualified Data.Text.IO               as T
+import           NoobsNotification.Database
+import           NoobsNotification.Scraper  (scrape)
+import           NoobsNotification.Types
 
 isNewerImage :: Monad m => Image -> m Bool
 isNewerImage (Image name currentVersion _) = do

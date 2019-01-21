@@ -1,6 +1,6 @@
 module NoobsNotification.Types where
 
-import Data.Text (Text)
+import           Data.Text (Text)
 
 type TorrentDownload = Text
 type Version         = Text
