@@ -9,13 +9,14 @@ extra-source-files:
 
 ghc-options:
   - -Wall
-  - -fno-warn-partial-type-signatures
   - -fno-warn-name-shadowing
+  - -fno-warn-partial-type-signatures
+  - -fwarn-incomplete-patterns
+  - -fwarn-missing-signatures
   - -fwarn-tabs
   - -fwarn-unused-imports
-  - -fwarn-missing-signatures
-  - -fwarn-incomplete-patterns
 
+# Needs to manually be kept in sync w/ .stylish-haskell.yaml
 default-extensions:
   - BangPatterns
   - DefaultSignatures
@@ -43,10 +44,14 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
+    - aeson
+    - amazonka
+    - amazonka-core
+    - amazonka-s3
+    - basic-lens
+    - conduit-extra
     - hal
     - scalpel
-    - amazonka-s3
-    - aeson
 
 executables:
   noobs-notification:
