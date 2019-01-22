@@ -1,7 +1,7 @@
 module NoobsNotification.Types where
 
-import           Data.Text (Text)
-import Data.Aeson (FromJSON, ToJSON)
+import Data.Aeson   (FromJSON, ToJSON)
+import Data.Text    (Text)
 import GHC.Generics (Generic)
 
 data Image = Image {

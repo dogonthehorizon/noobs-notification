@@ -1,23 +1,29 @@
 module NoobsNotification.Database (
-  getImageFile,
-  writeImageFile
+  readImage,
+  writeImage
 ) where
 
-import           Data.Text               (Text)
-import           NoobsNotification.Types
-
+import Control.Lens.Basic       (view)
+import Control.Monad            (void)
+import Control.Monad.IO.Class   (MonadIO)
+import Data.Aeson               (decode, encode)
+import Data.Conduit.Binary      (sinkLbs)
+import Data.Text                (Text)
+import Network.AWS              (MonadAWS, send, sinkBody)
+import Network.AWS.Data.Body    (toBody)
+import Network.AWS.S3.GetObject (getObject, gorsBody)
 import Network.AWS.S3.PutObject (putObject)
+import Network.AWS.S3.Types     (BucketName (..), ObjectKey (..))
+import NoobsNotification.Types
 
-getImageFile :: Monad m => Text -> m (Either Text Image)
-getImageFile _ = return . Right $
-  Image {
-    name = "test",
-    version = "3.0.1",
-    torrentDownload = "bar"
-  }
+readImage :: (MonadIO m, MonadAWS m) => Text -> Text -> m (Maybe Image)
+readImage bucketName name = do
+  response <- send $ getObject (BucketName bucketName) (ObjectKey name)
+  decode <$> sinkBody (view gorsBody response) sinkLbs
 
 -- TODO don't specialize to IO
-writeImageFile :: Image -> IO (Either Text ())
-writeImageFile image @ Image { name } = do
-  putStrLn $ "wrote: " ++ show image
-  return (Right ())
+writeImage :: MonadAWS m => Text -> Image -> m ()
+writeImage bucketName image @ Image { name } =
+  void . send $
+  putObject (BucketName bucketName) (ObjectKey name)
+    (toBody . encode $ image)
