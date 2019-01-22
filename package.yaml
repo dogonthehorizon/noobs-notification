@@ -39,18 +39,17 @@ default-extensions:
 
 dependencies:
   - base >= 4.7 && < 5
+  - aeson
+  - amazonka
   - text
 
 library:
   source-dirs: src
   dependencies:
-    - aeson
-    - amazonka
     - amazonka-core
     - amazonka-s3
     - basic-lens
     - conduit-extra
-    - hal
     - scalpel
 
 executables:
@@ -59,3 +58,7 @@ executables:
     main:             Main.hs
     dependencies:
       - noobs-notification
+      - envy
+      - hal
+      - mtl
+      - exceptions

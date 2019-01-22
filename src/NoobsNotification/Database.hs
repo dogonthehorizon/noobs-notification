@@ -21,7 +21,6 @@ readImage bucketName name = do
   response <- send $ getObject (BucketName bucketName) (ObjectKey name)
   decode <$> sinkBody (view gorsBody response) sinkLbs
 
--- TODO don't specialize to IO
 writeImage :: MonadAWS m => Text -> Image -> m ()
 writeImage bucketName image @ Image { name } =
   void . send $

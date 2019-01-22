@@ -66,6 +66,8 @@ extra-deps:
 # compiler-check: newer-minor
 docker:
   enable: true
+  env:
+    - NOOBS_BUCKET_NAME=foo
   # Increase the ulimit maxfile size so that split-objs works properly when
   # running inside the container build env. Tagsoup and Cryptonite seem to be
   # the culprits.
