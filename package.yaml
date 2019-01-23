@@ -53,7 +53,8 @@ library:
     - scalpel
 
 executables:
-  noobs-notification:
+  # We must call our binary `bootstrap` for the custom lambda runtime.
+  bootstrap:
     source-dirs:      app
     main:             Main.hs
     dependencies:

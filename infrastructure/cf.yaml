@@ -1,4 +1,5 @@
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
 Description: Infrastructure for the NOOBS notification application.
 Resources:
   ImageBucket:
@@ -8,3 +9,14 @@ Resources:
         Rules:
           - ExpirationInDays: 30
             Status: Enabled
+  NoobsNotification:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: NOT_USED
+      Runtime: provided
+      CodeUri: ../.stack-work/docker/_home/.local/bin/
+      MemorySize: 128
+      Timeout: 3
+      Environment:
+        Variables:
+          NOOBS_BUCKET_NAME: !Ref ImageBucket
