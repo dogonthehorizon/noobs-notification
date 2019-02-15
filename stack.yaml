@@ -17,7 +17,7 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-13.3
+resolver: lts-13.4
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -64,16 +64,18 @@ extra-deps:
 #
 # Allow a newer minor version of GHC than the snapshot specifies
 # compiler-check: newer-minor
-docker:
-  enable: true
-  env:
-    - NOOBS_BUCKET_NAME=foo
-  # Increase the ulimit maxfile size so that split-objs works properly when
-  # running inside the container build env. Tagsoup and Cryptonite seem to be
-  # the culprits.
-  # run-args: ["--privileged", "--ulimit=nofile=1001000:1001000"]
+# Increase the ulimit maxfile size so that split-objs works properly when
+# running inside the container build env. Tagsoup and Cryptonite seem to be
+# the culprits.
+# run-args: ["--privileged", "--ulimit=nofile=1001000:1001000"]
 
 # build:
   # Reduces binary size at the cost of compile time. Also requires re-compiling
   # all packages in the LTS and clearning the local stack-work dir.
   # split-objs: true
+
+docker:
+  enable: true
+  set-user: false
+  env:
+    - NOOBS_IMAGE_BUCKET=foo

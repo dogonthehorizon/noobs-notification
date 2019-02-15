@@ -14,7 +14,7 @@ Resources:
     Properties:
       Handler: NOT_USED
       Runtime: provided
-      CodeUri: ../.stack-work/docker/_home/.local/bin/
+      CodeUri: ../.stack-work/docker/_home/.local/bin
       MemorySize: 128
       Timeout: 3
       Environment:

@@ -35,13 +35,14 @@ default-extensions:
   - OverloadedStrings
   - PatternSynonyms
   - ScopedTypeVariables
-
+  - TemplateHaskell
 
 dependencies:
   - base >= 4.7 && < 5
   - aeson
   - amazonka
   - text
+  - katip
 
 library:
   source-dirs: src
