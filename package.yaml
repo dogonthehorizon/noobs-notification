@@ -15,6 +15,7 @@ ghc-options:
   - -fwarn-missing-signatures
   - -fwarn-tabs
   - -fwarn-unused-imports
+  - -fprint-potential-instances
 
 # Needs to manually be kept in sync w/ .stylish-haskell.yaml
 default-extensions:
@@ -41,8 +42,9 @@ dependencies:
   - base >= 4.7 && < 5
   - aeson
   - amazonka
-  - text
+  - exceptions
   - katip
+  - text
 
 library:
   source-dirs: src
@@ -63,4 +65,3 @@ executables:
       - envy
       - hal
       - mtl
-      - exceptions

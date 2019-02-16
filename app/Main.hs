@@ -70,11 +70,12 @@ handler :: Value -> NoobsNotification Value
 handler _ = do
   $(K.logTM) InfoS "Starting Noobs Notification"
   Environment { bucketName } <- asks environment
+  
   scrapeResults <- liftIO $ scrape  "https://www.raspberrypi.org/downloads/noobs/"
   case scrapeResults of
     Nothing -> do
       $(K.logTM) InfoS "Got no results from RPI.org"
-      fail ""
+      return Null
     Just images -> do
       _ <- for images $ \i -> do
         newerImage <- isNewerImage i

@@ -8,6 +8,9 @@
 BIN_PATH=$(shell stack path | grep bin-path | awk -F\  '{ print $$2 }' | head -n1)
 export PATH := $(BIN_PATH):$(PATH)
 
+FN_BUCKET=***REMOVED***
+STACK_NAME=noobs-notification
+
 clean:
 	@stack clean
 
@@ -27,3 +30,16 @@ lint-all: stylish-haskell hlint
 
 test:
 	stack test --test-arguments "--color always"
+
+package:
+	@aws cloudformation package \
+		--template-file=infrastructure/cf.yaml \
+		--s3-bucket "${FN_BUCKET}" \
+		--output-template-file=deployment_stack.yaml
+
+deploy:
+	@aws cloudformation deploy \
+		--stack-name "${STACK_NAME}" \
+		--region us-west-2 \
+		--capabilities CAPABILITY_IAM \
+		--template-file deployment_stack.yaml
