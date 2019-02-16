@@ -45,10 +45,13 @@ isNewerImage Image { name, version = currentVersion } = do
 
 handler :: Value -> NoobsNotification Value
 handler _ = do
+  liftIO . print $ "Test"
   bucket <- asks bucketName
   scrapeResults <- liftIO $ scrape  "https://www.raspberrypi.org/downloads/noobs/"
   case scrapeResults of
-    Nothing -> fail "We couldn't get results from the rpi site"
+    Nothing -> do
+      liftIO $ putStrLn "We couldn't get results from the rpi site"
+      return Null
     Just images -> do
       _ <- for images $ \i -> do
         newerImage <- isNewerImage i
@@ -62,9 +65,10 @@ handler _ = do
 
 main :: IO ()
 main = do
+  print "Starting up"
   result <- decodeEnv :: IO (Either String Environment)
   case result of
-    Left err -> fail err
+    Left err -> print err
     Right env -> do
       awsEnv <- newEnv Discover
       runResourceT . runAWST awsEnv $

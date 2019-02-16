@@ -16,7 +16,20 @@ Resources:
       Runtime: provided
       CodeUri: ../.stack-work/docker/_home/.local/bin/
       MemorySize: 128
-      Timeout: 3
+      Timeout: 5
       Environment:
         Variables:
           NOOBS_BUCKET_NAME: !Ref ImageBucket
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - "s3:Put*"
+                - "s3:Get*"
+              Resource:
+                - !Sub "arn:aws:s3:::${ImageBucket}/*"
+            - Effect: Allow
+              Action: "s3:List*"
+              Resource:
+                - !Sub "arn:aws:s3:::${ImageBucket}"
