@@ -61,9 +61,11 @@ isNewerImage Image { name, version = currentVersion } = do
   $(K.logTM) InfoS $ K.logStr $ "Reading " <> name <> " from " <> bucketName <> " from S3." 
   contents <- readImage bucketName name
   case contents of
-    Nothing -> return False
+    Nothing -> do
+      $(K.logTM) InfoS $ K.logStr $ "Did not find an existing record of " <> name
+      return True -- No pre-existing image, so anything is newer.
     Just Image { version = previousVersion} -> do
-      $(K.logTM) InfoS $ K.logStr $ "Found " <> previousVersion <> " for  " <> name
+      $(K.logTM) InfoS $ K.logStr $ "Found " <> previousVersion <> " for " <> name
       return $ previousVersion > currentVersion
 
 handler :: Value -> NoobsNotification Value
@@ -82,9 +84,8 @@ handler _ = do
         if newerImage
            then do
              $(K.logTM) InfoS $ K.logStr $ "Writing " <> show i
-
              liftAWS $ writeImage bucketName i
-             liftIO $ print i -- TODO notify us of a newer version
+             -- TODO send notification of newer image
              return Null
            else return Null
       return Null
