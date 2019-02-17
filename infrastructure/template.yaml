@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Infrastructure for the NOOBS notification application.
+Parameters:
+  NotificationEmailAddress:
+    Description: The e-mail to send updates of new images to
+    Type: String
 Resources:
   ImageBucket:
     Type: AWS::S3::Bucket
@@ -20,6 +24,7 @@ Resources:
       Environment:
         Variables:
           NOOBS_BUCKET_NAME: !Ref ImageBucket
+          NOTIFICATION_TOPIC: !Ref NotificationTopic
       Policies:
         - Version: 2012-10-17
           Statement:
@@ -33,3 +38,11 @@ Resources:
               Action: "s3:List*"
               Resource:
                 - !Sub "arn:aws:s3:::${ImageBucket}"
+  NotificationTopic:
+    Type: AWS::SNS::Topic
+  NotificationEmailSub:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref NotificationTopic
+      Endpoint: !Ref NotificationEmailAddress
+      Protocol: email

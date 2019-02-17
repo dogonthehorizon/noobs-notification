@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-FN_BUCKET="***REMOVED***" 
+source ./env
+
 OUT_FILE="deploy.yaml"
 
 aws cloudformation package \
@@ -12,4 +13,6 @@ aws cloudformation deploy \
   --stack-name "noobs-notification" \
   --region us-west-2 \
   --capabilities CAPABILITY_IAM \
-  --template-file "$OUT_FILE"
+  --template-file "$OUT_FILE" \
+  --parameter-overrides \
+    NotificationEmailAddress="$NOTIFICATION_EMAIL"
