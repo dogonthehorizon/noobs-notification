@@ -38,6 +38,10 @@ Resources:
               Action: "s3:List*"
               Resource:
                 - !Sub "arn:aws:s3:::${ImageBucket}"
+            - Effect: Allow
+              Action: "sns:Publish"
+              Resource:
+                - !Ref NotificationTopic
   NotificationTopic:
     Type: AWS::SNS::Topic
   NotificationEmailSub:
