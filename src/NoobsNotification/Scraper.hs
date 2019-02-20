@@ -15,16 +15,10 @@ images :: Scraper Text [Image]
 images = chroots ("div" @: [hasClass "image-info"]) noobsImage
 
 noobsImage :: Scraper Text Image
-noobsImage =
-  Image
-    <$> text "h3"
-    <*> imageVersion
-    <*> torrentUrl
+noobsImage = Image <$> text "h3" <*> imageVersion <*> torrentUrl
 
 imageVersion :: Scraper Text Text
-imageVersion =
-  text $ "div" @: [hasClass "image-details"] // "strong"
+imageVersion = text $ "div" @: [hasClass "image-details"] // "strong"
 
 torrentUrl :: Scraper Text Text
-torrentUrl =
-  attr "href" $ "a" @: [hasClass "dl-torrent"]
+torrentUrl = attr "href" $ "a" @: [hasClass "dl-torrent"]

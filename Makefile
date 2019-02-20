@@ -15,7 +15,7 @@ clean:
 setup: clean
 	stack build --no-docker --copy-compiler-tool stylish-haskell hlint apply-refact
 
-_HLINT=hlint --refactor --refactor-options -i {} \;
+_HLINT=hlint {} \;
 hlint:
 	@find {src,app}/ -name "*.hs" -exec $(_HLINT)
 
