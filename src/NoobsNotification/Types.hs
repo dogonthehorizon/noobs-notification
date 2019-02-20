@@ -1,4 +1,6 @@
-module NoobsNotification.Types where
+module NoobsNotification.Types (
+  Image(..)
+) where
 
 import Data.Aeson   (FromJSON, ToJSON)
 import Data.Text    (Text)

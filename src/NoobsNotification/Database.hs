@@ -7,17 +7,16 @@ import Network.AWS.Types (Error)
 import Control.Monad.Catch (MonadCatch, catch)
 import Control.Lens.Basic       (view)
 import Control.Monad            (void)
-import Control.Monad.IO.Class   (MonadIO, liftIO)
+import Control.Monad.IO.Class   (MonadIO)
 import Data.Aeson               (decode, encode)
 import Data.Conduit.Binary      (sinkLbs)
 import Data.Text                (Text)
 import Network.AWS              (MonadAWS, send, sinkBody)
 import Network.AWS.Data.Body    (toBody)
-import Network.AWS.S3.GetObject (getObject, gorsBody, gorsResponseStatus)
+import Network.AWS.S3.GetObject (getObject, gorsBody)
 import Network.AWS.S3.PutObject (putObject)
 import Network.AWS.S3.Types     (BucketName (..), ObjectKey (..))
 import NoobsNotification.Types
-import qualified Data.Text as T
 
 readImage :: (MonadCatch m, MonadIO m, MonadAWS m) => Text -> Text -> m (Maybe Image)
 readImage bucketName name = do

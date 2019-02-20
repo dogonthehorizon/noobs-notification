@@ -51,9 +51,11 @@ library:
   dependencies:
     - amazonka-core
     - amazonka-s3
+    - amazonka-sns
     - basic-lens
     - conduit-extra
     - scalpel
+    - stache
 
 executables:
   # We must call our binary `bootstrap` for the custom lambda runtime.

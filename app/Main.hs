@@ -11,6 +11,7 @@ import Data.Text                  (Text)
 import Data.Traversable           (for)
 import Network.AWS                (AWS, Credentials (Discover), MonadAWS,
                                    liftAWS, newEnv, runResourceT)
+import NoobsNotification.Notification (publishNotification)
 import NoobsNotification.Database (readImage, writeImage)
 import NoobsNotification.Scraper  (scrape)
 import NoobsNotification.Types    (Image (..))
@@ -84,8 +85,8 @@ handler _ = do
         if newerImage
            then do
              $(K.logTM) InfoS $ K.logStr $ "Writing " <> show i
+             publishNotification i
              liftAWS $ writeImage bucketName i
-             -- TODO send notification of newer image
              return Null
            else return Null
       return Null
