@@ -19,11 +19,15 @@ _HLINT=hlint --refactor --refactor-options -i {} \;
 hlint:
 	@find {src,app}/ -name "*.hs" -exec $(_HLINT)
 
-_STYLISH=stack --no-docker exec -- stylish-haskell -i {} \;
+_STYLISH=stylish-haskell -i {} \;
 stylish-haskell:
 	@find {src,app}/ -name "*.hs" -exec $(_STYLISH)
 
-lint-all: stylish-haskell hlint
+_BRITTANY=brittany --write-mode=inplace {} \;
+brittany:
+	@find {src,app}/ -name "*.hs" -exec $(_BRITTANY)
+
+lint-all: stylish-haskell hlint brittany
 
 test:
 	stack test --test-arguments "--color always"
