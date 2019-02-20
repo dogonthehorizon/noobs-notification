@@ -23,7 +23,8 @@ import System.IO (stdout)
 
 
 data Environment = Environment {
-  bucketName   :: Text
+  bucketName :: Text,
+  topicArn   :: Text
 }
 
 data Context = Context {
@@ -34,7 +35,9 @@ data Context = Context {
 }
 
 instance FromEnv Environment where
-  fromEnv = Environment <$> env "NOOBS_BUCKET_NAME"
+  fromEnv = Environment
+    <$> env "NOOBS_BUCKET_NAME"
+    <*> env "NOTIFICATION_TOPIC" 
 
 -- Ignore the lambda context since we dont' actually need it.
 -- Kind of a bummer that we have to define this; is there a better way?
@@ -72,7 +75,7 @@ isNewerImage Image { name, version = currentVersion } = do
 handler :: Value -> NoobsNotification Value
 handler _ = do
   $(K.logTM) InfoS "Starting Noobs Notification"
-  Environment { bucketName } <- asks environment
+  Environment { bucketName, topicArn } <- asks environment
   
   scrapeResults <- liftIO $ scrape  "https://www.raspberrypi.org/downloads/noobs/"
   case scrapeResults of
@@ -84,8 +87,9 @@ handler _ = do
         newerImage <- isNewerImage i
         if newerImage
            then do
-             $(K.logTM) InfoS $ K.logStr $ "Writing " <> show i
-             publishNotification i
+             $(K.logTM) InfoS "Notifying topic about new image"
+             publishNotification topicArn i
+             $(K.logTM) InfoS $ K.logStr $ "Writing " <> show i <> " to S3"
              liftAWS $ writeImage bucketName i
              return Null
            else return Null
